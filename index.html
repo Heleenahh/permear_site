@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERMEAR — Pausa. Presença. Profundidade.</title>
+
+    <!-- Google Fonts: Cormorant Garamond (Títulos) & Plus Jakarta Sans (Textos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuração customizada de fontes e cores no Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        permear: {
+                            bg: '#F5EFE6',       /* Linho / Argila clara */
+                            text: '#261D18',     /* Terra / Café escuro */
+                            sand: '#DFD3C3',     /* Areia terrosa */
+                            muted: '#6E5B4F',    /* Barro / Taupe quente */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Ajustes sutis de tipografia e transições */
+        body {
+            background-color: #F5EFE6;
+            color: #261D18;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Transição suave para imagens dos cards */
+        .product-img-zoom {
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .product-img-zoom {
+            transform: scale(1.04);
+        }
+
+        /* Animação do Modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-backdrop {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+        .modal-content {
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-permear-bg text-permear-text selection:bg-permear-sand selection:text-permear-text">
+
+    <!-- =====================================================================
+         CABEÇALHO MINIMALISTA
+         ===================================================================== -->
+    <header class="sticky top-0 z-30 bg-permear-bg/90 backdrop-blur-md border-b border-permear-sand">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Espaço esquerdo para equilíbrio visual no desktop -->
+            <div class="hidden md:flex items-center space-x-6 text-xs tracking-widest uppercase text-permear-muted">
+                <a href="#vitrine" class="hover:text-permear-text transition-colors">Coleção Raízes</a>
+                <button type="button" onclick="abrirModalSobre()" class="uppercase hover:text-permear-text transition-colors">Sobre a Permear</button>
+            </div>
+
+            <!-- Marca Central -->
+            <a href="#" class="text-center mx-auto md:mx-0">
+    <img
+        src="https://dcdn-us.mitiendanube.com/stores/008/271/725/themes/common/logo-6965269726600485554-1791571373-bf54ceea6fd0980a71af859e702ccbb31791571373-640-0.webp"
+        alt="PERMEAR"
+        class="h-16 sm:h-16 w-auto mix-blend-multiply scale-[1.6] origin-center"
+    />
+</a>
+
+            <!-- Ação Direita: Gatilho do Guia de Medidas -->
+            <div class="flex items-center">
+                <button
+                    type="button"
+                    onclick="abrirModalMedidas()"
+                    class="text-xs tracking-wider uppercase border-b border-permear-text/40 hover:border-permear-text pb-0.5 transition-colors flex items-center gap-1.5"
+                    aria-label="Abrir Guia de Medidas">
+                    <!-- Ícone discreto de régua/medida -->
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 6h12M6 18h12M8 6v4m4-4v3m4-3v4M4 4h16v16H4V4z"/>
+                    </svg>
+                    <span class="hidden sm:inline">Guia de Medidas</span>
+                    <span class="sm:hidden">Medidas</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         SEÇÃO HERO / MANIFESTO EDITORIAL
+         ===================================================================== -->
+    <section id="manifesto" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-permear-sand">
+        <div class="max-w-3xl mx-auto text-center space-y-6">
+    
+
+            <p class="text-[11px] sm:text-xs tracking-[0.3em] uppercase text-permear-muted font-medium">
+                PAUSA. PRESENÇA. PROFUNDIDADE.
+            </p>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.15] text-permear-text">
+                PERMERAR: O que nos atravessa, permanece
+            </h1>
+            <p class="text-sm sm:text-base text-permear-muted font-light max-w-xl mx-auto leading-relaxed">
+                Peças autorais produzidas em pequena escala com algodão certificado.
+                Modelagens pensadas para acompanhar o movimento natural do corpo sem pressa.
+            </p>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         VITRINE & FILTROS DE CATEGORIA
+         ===================================================================== -->
+    <main id="vitrine" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+
+        <!-- Barra Superior: Filtros + Contador + Botão de Medidas -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 mb-8 border-b border-permear-sand">
+
+            <!-- Botões de Filtro por Categoria -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0" role="tablist" aria-label="Filtrar produtos por modelagem">
+                <button
+                    type="button"
+                    onclick="filtrarCategoria('Todos')"
+                    data-categoria="Todos"
+                    class="filtro-btn px-4 py-2 text-xs tracking-widest uppercase rounded-full transition-all bg-permear-text text-permear-bg font-medium">
+                    Todos
+                </button>
+                <button
+                    type="button"
+                    onclick="filtrarCategoria('Oversized')"
+                    data-categoria="Oversized"
+                    class="filtro-btn px-4 py-2 text-xs tracking-widest uppercase rounded-full transition-all bg-permear-sand/50 text-permear-text hover:bg-permear-sand">
+                    Oversized
+                </button>
+                <button
+                    type="button"
+                    onclick="filtrarCategoria('Tradicional')"
+                    data-categoria="Tradicional"
+                    class="filtro-btn px-4 py-2 text-xs tracking-widest uppercase rounded-full transition-all bg-permear-sand/50 text-permear-text hover:bg-permear-sand">
+                    Tradicional
+                </button>
+            </div>
+
+            <!-- Informação auxiliar e atalho para comparar modelagens -->
+            <div class="flex items-center justify-between sm:justify-end gap-4 text-xs text-permear-muted">
+                <span id="contador-pecas">Exibindo todas as peças</span>
+                <span class="text-permear-sand">|</span>
+                <button type="button" onclick="abrirModalMedidas()" class="underline hover:text-permear-text transition-colors">
+                    Oversized vs. Tradicional?
+                </button>
+            </div>
+        </div>
+
+        <!-- GRADE DINÂMICA DE PRODUTOS (Renderizada via JavaScript) -->
+        <!-- 2 colunas no celular (grid-cols-2), 3 em tablets (md:grid-cols-3) e 4 no desktop (lg:grid-cols-4) -->
+        <div id="grade-produtos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10 sm:gap-x-6 sm:gap-y-12">
+            <!-- Os cards serão injetados automaticamente aqui pelo script abaixo -->
+        </div>
+
+    </main>
+
+    <!-- =====================================================================
+         RODAPÉ MINIMALISTA
+         ===================================================================== -->
+    <footer class="border-t border-permear-sand mt-16 py-12 px-4 sm:px-6 lg:px-8 bg-permear-sand/20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div>
+                <span class="font-serif text-2xl tracking-[0.2em] uppercase block mb-1">PERMEAR</span>
+                <p class="text-xs tracking-[0.2em] uppercase text-permear-muted">PAUSA. PRESENÇA. PROFUNDIDADE.</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-6 text-xs text-permear-muted">
+                <button type="button" onclick="abrirModalSobre()" class="hover:text-permear-text transition-colors">Sobre a PERMEAR</button>
+                <button type="button" onclick="abrirModalMedidas()" class="hover:text-permear-text transition-colors">Guia de Medidas</button>
+                <a href="https://wa.me/5535988648360" target="_blank" rel="noopener noreferrer" class="hover:text-permear-text transition-colors">Atendimento via WhatsApp</a>
+                <button type="button" onclick="abrirModalTrocas()" class="hover:text-permear-text transition-colors">Trocas e Devoluções</button>
+            </div>
+
+            <p class="text-[11px] text-permear-muted">
+                &copy; 2026 PERMEAR. Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         MODAL: GUIA DE MEDIDAS E MODELAGEM (OVERSIZED VS. TRADICIONAL)
+         ===================================================================== -->
+    <div id="modal-medidas" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-permear-text/40 backdrop-blur-xs modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+        <div class="bg-permear-bg border border-permear-sand w-full max-w-2xl rounded-lg shadow-2xl overflow-hidden modal-content max-h-[90vh] flex flex-col">
+
+            <!-- Cabeçalho do Modal -->
+            <div class="px-6 py-5 border-b border-permear-sand flex items-center justify-between">
+                <div>
+                    <span class="text-[10px] tracking-[0.25em] uppercase text-permear-muted block">Caimento & Proporção</span>
+                    <h2 id="modal-titulo" class="font-serif text-2xl sm:text-3xl text-permear-text">Guia de Medidas e Modelagem</h2>
+                </div>
+                <button
+                    type="button"
+                    onclick="fecharModalMedidas()"
+                    class="p-2 text-permear-muted hover:text-permear-text rounded-full hover:bg-permear-sand/50 transition-colors"
+                    aria-label="Fechar janela">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Corpo do Modal (com rolagem interna se necessário) -->
+            <div class="p-6 overflow-y-auto space-y-8">
+
+                <!-- Comparativo Visual/Conceitual: Oversized vs Tradicional -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-md bg-permear-sand/30 border border-permear-sand">
+                        <h3 class="font-serif text-xl font-medium mb-1">Modelagem Oversized</h3>
+                        <p class="text-xs text-permear-muted leading-relaxed">
+                            Ombros deslocados, mangas mais alongadas até próximo ao cotovelo e largura ampla no tórax. Proporciona estrutura e presença visual contemporânea.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-md bg-permear-sand/30 border border-permear-sand">
+                        <h3 class="font-serif text-xl font-medium mb-1">Modelagem Tradicional</h3>
+                        <p class="text-xs text-permear-muted leading-relaxed">
+                            Corte reto e equilibrado, com costura do ombro alinhada à anatomia natural. Caimento limpo, versátil e atemporal para o dia a dia.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tabela de Medidas Oversized -->
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-widest mb-3 text-permear-text">Tabela — Oversized (em cm)</h4>
+                    <div class="overflow-x-auto border border-permear-sand rounded-md">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-permear-sand/40 text-permear-text uppercase tracking-wider">
+                                <tr>
+                                    <th class="py-2.5 px-4 font-medium">Tamanho</th>
+                                    <th class="py-2.5 px-4 font-medium">Largura (Tórax)</th>
+                                    <th class="py-2.5 px-4 font-medium">Comprimento</th>
+                                    <th class="py-2.5 px-4 font-medium">Manga</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-permear-sand text-permear-muted">
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">P</td><td class="py-2.5 px-4">56 cm</td><td class="py-2.5 px-4">72 cm</td><td class="py-2.5 px-4">24 cm</td></tr>
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">M</td><td class="py-2.5 px-4">59 cm</td><td class="py-2.5 px-4">75 cm</td><td class="py-2.5 px-4">25 cm</td></tr>
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">G</td><td class="py-2.5 px-4">62 cm</td><td class="py-2.5 px-4">78 cm</td><td class="py-2.5 px-4">26 cm</td></tr>
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">GG</td><td class="py-2.5 px-4">65 cm</td><td class="py-2.5 px-4">80 cm</td><td class="py-2.5 px-4">27 cm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tabela de Medidas Tradicional -->
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-widest mb-3 text-permear-text">Tabela — Tradicional (em cm)</h4>
+                    <div class="overflow-x-auto border border-permear-sand rounded-md">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-permear-sand/40 text-permear-text uppercase tracking-wider">
+                                <tr>
+                                    <th class="py-2.5 px-4 font-medium">Tamanho</th>
+                                    <th class="py-2.5 px-4 font-medium">Largura (Tórax)</th>
+                                    <th class="py-2.5 px-4 font-medium">Comprimento</th>
+                                    <th class="py-2.5 px-4 font-medium">Manga</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-permear-sand text-permear-muted">
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">P</td><td class="py-2.5 px-4">51 cm</td><td class="py-2.5 px-4">69 cm</td><td class="py-2.5 px-4">20 cm</td></tr>
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">M</td><td class="py-2.5 px-4">54 cm</td><td class="py-2.5 px-4">71 cm</td><td class="py-2.5 px-4">21 cm</td></tr>
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">G</td><td class="py-2.5 px-4">57 cm</td><td class="py-2.5 px-4">74 cm</td><td class="py-2.5 px-4">22 cm</td></tr>
+                                <tr><td class="py-2.5 px-4 font-medium text-permear-text">GG</td><td class="py-2.5 px-4">60 cm</td><td class="py-2.5 px-4">76 cm</td><td class="py-2.5 px-4">23 cm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="text-[11px] text-permear-muted italic">
+                    * As medidas podem variar até 1,5 cm devido ao processo natural de lavanderia e pré-encolhimento do algodão.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL: TROCAS E DEVOLUÇÕES
+         ===================================================================== -->
+    <div id="modal-trocas" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-permear-text/40 backdrop-blur-xs modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-trocas-titulo">
+        <div class="bg-permear-bg border border-permear-sand w-full max-w-lg rounded-lg shadow-2xl overflow-hidden modal-content">
+
+            <!-- Cabeçalho do Modal -->
+            <div class="px-6 py-5 border-b border-permear-sand flex items-center justify-between">
+                <div>
+                    <span class="text-[10px] tracking-[0.25em] uppercase text-permear-muted block">Atendimento & Suporte</span>
+                    <h2 id="modal-trocas-titulo" class="font-serif text-2xl sm:text-3xl text-permear-text">Trocas e Devoluções</h2>
+                </div>
+                <button
+                    type="button"
+                    onclick="fecharModalTrocas()"
+                    class="p-2 text-permear-muted hover:text-permear-text rounded-full hover:bg-permear-sand/50 transition-colors"
+                    aria-label="Fechar janela">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Corpo do Modal -->
+            <div class="p-6 space-y-4 text-sm text-permear-text leading-relaxed">
+                <p class="font-medium">Você pode trocar ou devolver os produtos comprados:</p>
+
+                <div class="p-4 rounded-md bg-permear-sand/30 border border-permear-sand space-y-2 text-permear-muted">
+                    <p>
+                        Da sua casa, enviando um e-mail para
+                        <a href="mailto:maria-jadi@hotmail.com" class="text-permear-text font-medium underline hover:opacity-75 transition-opacity">maria-jadi@hotmail.com</a>.
+                    </p>
+                    <p>.Nós vamos entrar em contato assim que possível!</p>
+                </div>
+
+                <p class="text-xs text-permear-muted pt-1">
+                    As devoluções só podem ser feitas dentro dos <span class="font-medium text-permear-text">15 dias</span> após a compra
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL: SOBRE A PERMEAR
+         ===================================================================== -->
+    <div id="modal-sobre" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-permear-text/40 backdrop-blur-xs modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-sobre-titulo">
+        <div class="bg-permear-bg border border-permear-sand w-full max-w-xl rounded-lg shadow-2xl overflow-hidden modal-content max-h-[90vh] flex flex-col">
+
+            <!-- Cabeçalho do Modal -->
+            <div class="px-6 py-5 border-b border-permear-sand flex items-center justify-between">
+                <div>
+                    <span class="text-[10px] tracking-[0.25em] uppercase text-permear-muted block">Manifesto & Origem</span>
+                    <h2 id="modal-sobre-titulo" class="font-serif text-2xl sm:text-3xl text-permear-text">Sobre a PERMEAR</h2>
+                </div>
+                <button
+                    type="button"
+                    onclick="fecharModalSobre()"
+                    class="p-2 text-permear-muted hover:text-permear-text rounded-full hover:bg-permear-sand/50 transition-colors"
+                    aria-label="Fechar janela">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Corpo do Modal -->
+            <div class="p-6 sm:p-8 overflow-y-auto space-y-5 text-sm text-permear-muted leading-relaxed">
+                <p class="font-serif text-2xl sm:text-3xl text-permear-text italic leading-snug">
+                    O que nos atravessa, permanece!
+                </p>
+
+                <p class="text-permear-text">
+                    A PERMEAR nasce do encontro entre presença, identidade e ancestralidade.
+                </p>
+
+                <p>
+                    Criamos peças que carregam significado sem precisar explicá-lo por inteiro. Símbolos, memórias, histórias e caminhos que atravessam gerações e continuam presentes em quem somos.
+                </p>
+
+                <p>
+                    Nossa primeira coleção, <strong>Coleção Raízes</strong>, parte de referências da cultura e da espiritualidade de matriz africana, traduzidas de forma contemporânea, minimalista e autoral.
+                </p>
+
+                <p>
+                    Mais do que vestir uma imagem, acreditamos em vestir aquilo que faz sentido para cada pessoa.
+                </p>
+
+                <p class="text-permear-text font-medium pt-1">
+                    A PERMEAR é sobre aquilo que permanece.
+                </p>
+
+                <div class="pt-4 border-t border-permear-sand/80 font-serif text-lg sm:text-xl text-permear-text space-y-1">
+                    <p>Aquilo que nos forma.</p>
+                    <p>Aquilo que nos acompanha.</p>
+                    <p>Aquilo que nos atravessa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         BOTÃO FLUTUANTE DO WHATSAPP (CANTO INFERIOR DIREITO)
+         ===================================================================== -->
+    <a
+        href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20vim%20pela%20vitrine%20da%20PERMEAR%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida."
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar com a PERMEAR no WhatsApp"
+        class="fixed bottom-6 right-6 z-40 group flex items-center gap-2.5 bg-permear-text text-permear-bg px-4 py-3 rounded-full shadow-lg hover:bg-[#3B2C24] transition-all duration-300">
+        <!-- Ícone minimalista do WhatsApp em SVG -->
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
+        </svg>
+        <span class="text-xs font-medium tracking-wider hidden sm:inline">Dúvidas?</span>
+    </a>
+
+    <!-- =====================================================================
+         JAVASCRIPT: CATÁLOGO DINÂMICO, FILTROS E CONTROLE DE MODAIS
+         ===================================================================== -->
+    <script>
+        /**
+         * ===================================================================
+         * ÁREA DE EDIÇÃO DE PRODUTOS (CATÁLOGO PERMEAR)
+         * ===================================================================
+         * Para adicionar uma nova peça, copie um dos blocos abaixo (entre { e }),
+         * cole no final da lista antes do fechamento '];' e preencha os dados:
+         * - id: número único da peça
+         * - nome: nome da camiseta/peça
+         * - categoria: DEVE ser exatamente "Oversized" ou "Tradicional" (para o filtro funcionar)
+         * - preco: valor formatado (ex: "R$ 169,00")
+         * - parcelamento: texto discreto abaixo do preço (ex: "ou 3x de R$ 56,33 sem juros")
+         * - tag: selo opcional no canto da foto (ex: "Última peça", "Novo", ou "" para deixar vazio)
+         * - imagem: link direto da foto (proporção ideal vertical 3:4)
+         * - linkNuvemshop: URL completa do checkout/produto na sua loja Nuvemshop
+         */
+        const produtos = [
+            {
+                id: 1,
+                nome: "Proteção Oversized",
+                categoria: "Oversized",
+                preco: "R$ 129,00",
+                parcelamento: "3 x de R$43,00 sem juros",
+                tag: "Última peça",
+                imagem: "https://dcdn-us.mitiendanube.com/stores/008/271/725/products/01_modelo_feminino_frente-4fe4d6fae19b0b731617933048170325-1024-1024.png",
+                linkNuvemshop: "https://permear.lojavirtualnuvem.com.br/produtos/pmr-01t-protecao-tradicional-copia-15j1c/"
+            },
+            {
+                id: 2,
+                nome: "Proteção Tradicional",
+                categoria: "Tradicional",
+                preco: "R$ 119,00",
+                parcelamento: "3 x de R$39,67 sem juros",
+                tag: "Última peça",
+                imagem: "https://dcdn-us.mitiendanube.com/stores/008/271/725/products/proteaao-nova-72d767e1b7afcc74b317933046546569-1024-1024.webp",
+                linkNuvemshop: "https://permear.lojavirtualnuvem.com.br/produtos/pmr-01-protecao/?entry_path=category"
+            },
+            {
+                id: 3,
+                nome: "Sabedoria Oversized",
+                categoria: "Oversized",
+                preco: "R$ 129,00",
+                parcelamento: "3 x de R$43,00 sem juros",
+                tag: "Última peça",
+                imagem: "https://dcdn-us.mitiendanube.com/stores/008/271/725/products/retrato-ao-sol-com-raizes-antigas-0383899ea957f82edc17915643510587-1024-1024.webp",
+                linkNuvemshop: "https://permear.lojavirtualnuvem.com.br/produtos/pmr-02-sabedoria/?entry_path=category"
+            },
+            {
+                id: 4,
+                nome: "Sabedoria Tradicional",
+                categoria: "Tradicional",
+                preco: "R$ 119,00",
+                parcelamento: "3 x de R$39,67 sem juros",
+                tag: "Última peça",
+                imagem: "https://dcdn-us.mitiendanube.com/stores/008/271/725/products/sabedoria-2e86ab86f8df390fe017933039011682-1024-1024.webp",
+                linkNuvemshop: "https://permear.lojavirtualnuvem.com.br/produtos/pmr-02-sabedoria-tradicional-vry6o/?entry_path=category"
+            },
+            {
+                id: 5,
+                nome: "Liberdade Oversized",
+                categoria: "Oversized",
+                preco: "R$ 129,00",
+                parcelamento: "3 x de R$43,00 sem juros",
+                tag: "Última peça",
+                imagem: "https://dcdn-us.mitiendanube.com/stores/008/271/725/products/retrato-editorial-com-estampa-sarava-e82e1b4495f31282eb17915650438973-1024-1024.webp",
+                linkNuvemshop: "https://permear.lojavirtualnuvem.com.br/produtos/pmr-03-liberdade/?entry_path=category"
+            },
+            {
+                id: 6,
+                nome: "Liberdade Tradicional",
+                categoria: "Tradicional",
+                preco: "R$ 119,00",
+                parcelamento: "3 x de R$39,67 sem juros",
+                tag: "Última peça",
+                imagem: "https://dcdn-us.mitiendanube.com/stores/008/271/725/products/retrato-solar-com-camiseta-permear-56320225194e7ddbe917933032945115-1024-1024.png",
+                linkNuvemshop: "https://permear.lojavirtualnuvem.com.br/produtos/pmr-03-liberdade-tradicional-iwanu/?entry_path=category"
+            },
+            {
+                id: 7,
+                nome: "4 PERMEAR",
+                categoria: "Oversized",
+                preco: "R$ 129,00",
+                parcelamento: "3 x de R$43,00 sem juros",
+                tag: "Última peça",
+                imagem: "https://dcdn-us.mitiendanube.com/stores/008/271/725/products/01_logo_peito-1-da297e85b89b678d0117937051600661-1024-1024.webp",
+                linkNuvemshop: "https://permear.lojavirtualnuvem.com.br/produtos/pmr-4-permear-58cq7/?entry_path=category"
+            }
+        ];
+
+        // ===================================================================
+        // LÓGICA DE RENDERIZAÇÃO, FILTROS E MODAIS
+        // ===================================================================
+
+        const gradeProdutos = document.getElementById('grade-produtos');
+        const contadorPecas = document.getElementById('contador-pecas');
+        const botoesFiltro = document.querySelectorAll('.filtro-btn');
+        const FALLBACK_IMG = 'https://placehold.co/600x800/DFD3C3/261D18?text=PERMEAR';
+
+        /**
+         * Escapa caracteres especiais para evitar injeção de HTML em campos dinâmicos.
+         */
+        function escaparHTML(texto = '') {
+            return String(texto)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        /**
+         * Renderiza os cards na tela com base na categoria selecionada.
+         */
+        function renderizarVitrine(categoriaSelecionada = 'Todos') {
+            try {
+                if (!gradeProdutos || !contadorPecas) return;
+
+                const produtosFiltrados = categoriaSelecionada === 'Todos'
+                    ? produtos
+                    : produtos.filter(item => item.categoria.toLowerCase() === categoriaSelecionada.toLowerCase());
+
+                contadorPecas.textContent = produtosFiltrados.length === 1
+                    ? '1 peça disponível'
+                    : `${produtosFiltrados.length} peças disponíveis`;
+
+                gradeProdutos.innerHTML = '';
+
+                if (produtosFiltrados.length === 0) {
+                    gradeProdutos.innerHTML = `
+                        <div class="col-span-full py-16 text-center text-permear-muted text-sm">
+                            Nenhuma peça encontrada nesta modelagem no momento.
+                        </div>
+                    `;
+                    return;
+                }
+
+                produtosFiltrados.forEach(produto => {
+                    const nomeSeguro = escaparHTML(produto.nome);
+                    const categoriaSegura = escaparHTML(produto.categoria);
+                    const precoSeguro = escaparHTML(produto.preco);
+                    const parcelamentoSeguro = escaparHTML(produto.parcelamento);
+                    const tagSegura = escaparHTML(produto.tag);
+                    const imagemSegura = escaparHTML(produto.imagem || FALLBACK_IMG);
+                    const linkSeguro = escaparHTML(produto.linkNuvemshop || '#vitrine');
+
+                    const tagHTML = produto.tag && produto.tag.trim() !== ''
+                        ? `<span class="absolute top-3 left-3 z-10 bg-permear-bg/90 backdrop-blur-xs text-permear-text text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-sm border border-permear-sand font-medium">
+                            ${tagSegura}
+                           </span>`
+                        : '';
+
+                    const card = document.createElement('article');
+                    card.className = 'group flex flex-col justify-between';
+
+                    card.innerHTML = `
+                        <div>
+                            <!-- Container da Imagem em proporção vertical 3:4 -->
+                            <div class="relative aspect-[3/4] w-full overflow-hidden rounded-md bg-permear-sand/40 mb-4">
+                                ${tagHTML}
+                                <a href="${linkSeguro}" target="_blank" rel="noopener noreferrer" aria-label="Ver ${nomeSeguro}" class="block w-full h-full">
+                                    <img
+                                        src="${imagemSegura}"
+                                        alt="${nomeSeguro}"
+                                        loading="lazy"
+                                        onerror="this.onerror=null;this.src='${FALLBACK_IMG}';"
+                                        class="product-img-zoom w-full h-full object-cover"
+                                    />
+                                </a>
+                            </div>
+
+                            <!-- Informações da Peça -->
+                            <div class="space-y-1">
+                                <p class="text-[10px] tracking-[0.2em] uppercase text-permear-muted">
+                                    ${categoriaSegura}
+                                </p>
+                                <h2 class="font-serif text-xl text-permear-text leading-snug">
+                                    <a href="${linkSeguro}" target="_blank" rel="noopener noreferrer" class="hover:opacity-75 transition-opacity">
+                                        ${nomeSeguro}
+                                    </a>
+                                </h2>
+                                <p class="text-sm font-medium text-permear-text pt-0.5">
+                                    ${precoSeguro}
+                                </p>
+                                ${parcelamentoSeguro ? `<p class="text-[11px] text-permear-muted">${parcelamentoSeguro}</p>` : ''}
+                            </div>
+                        </div>
+
+                        <!-- Ação para Loja -->
+                        <div class="pt-4 mt-2">
+                            <a
+                                href="${linkSeguro}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center justify-center w-full py-2.5 px-4 text-[11px] tracking-[0.2em] uppercase border border-permear-text/25 rounded-full text-permear-text hover:bg-permear-text hover:text-permear-bg transition-colors">
+                                Ver na Loja
+                            </a>
+                        </div>
+                    `;
+
+                    gradeProdutos.appendChild(card);
+                });
+            } catch (erro) {
+                console.error('Erro ao renderizar a vitrine:', erro);
+                if (gradeProdutos) {
+                    gradeProdutos.innerHTML = `
+                        <div class="col-span-full py-12 text-center text-permear-muted text-sm">
+                            Não foi possível carregar as peças agora. Tente recarregar a página.
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        /**
+         * Atualiza o estado visual dos botões de filtro e re-renderiza a grade.
+         */
+        function filtrarCategoria(categoria) {
+            botoesFiltro.forEach(btn => {
+                const ativa = btn.dataset.categoria === categoria;
+                if (ativa) {
+                    btn.className = 'filtro-btn px-4 py-2 text-xs tracking-widest uppercase rounded-full transition-all bg-permear-text text-permear-bg font-medium';
+                } else {
+                    btn.className = 'filtro-btn px-4 py-2 text-xs tracking-widest uppercase rounded-full transition-all bg-permear-sand/50 text-permear-text hover:bg-permear-sand';
+                }
+            });
+
+            renderizarVitrine(categoria);
+        }
+
+        /**
+         * Utilitários para abrir e fechar modais com bloqueio de rolagem do fundo.
+         */
+        function alternarModal(idModal, abrir) {
+            const modal = document.getElementById(idModal);
+            if (!modal) return;
+
+            if (abrir) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+
+                const algumAberto = Array.from(document.querySelectorAll('[role="dialog"]'))
+                    .some(el => !el.classList.contains('hidden'));
+                if (!algumAberto) {
+                    document.body.classList.remove('overflow-hidden');
+                }
+            }
+        }
+
+        function abrirModalMedidas() { alternarModal('modal-medidas', true); }
+        function fecharModalMedidas() { alternarModal('modal-medidas', false); }
+
+        function abrirModalTrocas() { alternarModal('modal-trocas', true); }
+        function fecharModalTrocas() { alternarModal('modal-trocas', false); }
+
+        function abrirModalSobre() { alternarModal('modal-sobre', true); }
+        function fecharModalSobre() { alternarModal('modal-sobre', false); }
+
+        // Fecha modais ao clicar fora do conteúdo interno ou pressionar ESC
+        document.querySelectorAll('[role="dialog"]').forEach(modal => {
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    alternarModal(modal.id, false);
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                ['modal-medidas', 'modal-trocas', 'modal-sobre'].forEach(id => alternarModal(id, false));
+            }
+        });
+
+        // Inicialização da vitrine
+        renderizarVitrine('Todos');
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tailwind
